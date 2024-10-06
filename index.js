@@ -8,12 +8,16 @@ import { fileURLToPath } from "url";
 dotenv.config()
 const port = process.env.PORT||3000
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://uni-assignments.vercel.app',
+  methods: ['GET', 'POST'],  // Specify the allowed methods if needed
+  credentials: true         // If you're sending cookies with the request
+}));
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 app.use(express.json({ limit: "50mb" }));
 console.log(path.join(__dirname,'./client/dist'))
-app.use(express.static(path.join(__dirname,'./client/dist')))
+
 async function getdata() {
   let data = await Studentmodel.collection.aggregate([
     // Group by gender and section, and count each group
