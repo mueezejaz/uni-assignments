@@ -11,7 +11,7 @@ const Home = () => {
     try {
       setloading(true);
       if (localStorage.getItem("assunipro") !== "true" || !localStorage.getItem("assunipro")) {
-        const response = await axios.post('http://localhost:3000/post', data);
+        const response = await axios.post('https://uniassignments.vercel.app/post', data);
         localStorage.setItem("assunipro", "true");
         setalreadydone(true);
       } else {
