@@ -3,6 +3,8 @@ import dotenv  from "dotenv";
 import {db_connect} from "./utils/db.js"
 import cors from "cors"
 import { Studentmodel } from "./models/user.model.js";
+import path from "path";
+import { fileURLToPath } from "url";
 dotenv.config()
 const port = process.env.PORT||3000
 const app = express();
@@ -11,7 +13,11 @@ app.use(cors(
     origin:["http://localhost:5173"],
   }
 ));
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 app.use(express.json({ limit: "50mb" }));
+console.log(path.join(__dirname,'./client/dist'))
+app.use(express.static(path.join(__dirname,'./client/dist')))
 async function getdata() {
   let data = await Studentmodel.collection.aggregate([
     // Group by gender and section, and count each group
