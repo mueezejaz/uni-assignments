@@ -11,7 +11,6 @@ export default function Chart() {
       try {
         setloading(true);
         const response = await axios.get("http://localhost:3000/getdata");
-        console.log("Form submitted successfully:", response.data.data[0]);
         setstudentres(response.data.totalDocuments)
         getgenderdistribution(response.data.data[0]);
         getcitydistrybytion(response.data.data[0].cityDistribution);
@@ -44,7 +43,6 @@ export default function Chart() {
   }
   function getcitydistrybytion(data) {
     let lablesarray = [];
-    console.log("data is ", data);
     data.forEach((el) => {
       lablesarray = [...lablesarray, ...el.cities];
     });
@@ -82,11 +80,9 @@ export default function Chart() {
         }
       });
     });
-    console.log(e1countincity, e2countincity)
     setdata((pre) => ({ ...pre, cityNames, e1countincity, e2countincity }));
   }
   function getstudydis(data) {
-    console.log(data)
     let lablesarray = ["ics", "pre-eng", "pre-medical", "others"];
     let e1data = [];
     let e2data = [];
@@ -94,11 +90,9 @@ export default function Chart() {
         e1data.push(0)
         e2data.push(0)
       data.forEach((obj) => {
-        console.log(obj)
         if (obj._id === "E1") {
           obj.studied.forEach((st) => {
             if (st.subject === el) {
-                console.log(index)
               e1data[index]=st.count;
               
             }

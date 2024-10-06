@@ -12,8 +12,7 @@ const Home = () => {
       setloading(true);
       if (localStorage.getItem("assunipro") !== "true" || !localStorage.getItem("assunipro")) {
         const response = await axios.post('http://localhost:3000/post', data);
-        console.log('Form submitted successfully:', response.data);
-        // localStorage.setItem("assunipro", "true");
+        localStorage.setItem("assunipro", "true");
         setalreadydone(true);
       } else {
         setalreadydone(true); 
