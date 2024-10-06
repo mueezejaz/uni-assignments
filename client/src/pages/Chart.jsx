@@ -10,7 +10,7 @@ export default function Chart() {
     async function getdata() {
       try {
         setloading(true);
-        const response = await axios.get("http://localhost:3000/getdata");
+        const response = await axios.get("/getdata");
         setstudentres(response.data.totalDocuments)
         getgenderdistribution(response.data.data[0]);
         getcitydistrybytion(response.data.data[0].cityDistribution);
