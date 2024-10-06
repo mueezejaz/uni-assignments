@@ -31,7 +31,7 @@ const Home = () => {
         <h2 className="text-2xl font-semibold text-center mb-6">For Assignment</h2>
         <p className=" font-semibold text-center mb-6">pleas submit carefully because you can only submit it one time </p>
         { 
-        alreadydone ||localStorage.getItem("assunipro") === "true" ?<h1 className="text-white text-center mb-6">Thank you for submitting</h1>:
+        alreadydone ||localStorage.getItem("assunipro") === "true" ?<h1 className="text-white text-3xl text-center mb-6">Thank you for submitting🤗</h1>:
           <form onSubmit={handleSubmit(onSubmit)} className="bg-gray-800 p-8 rounded-lg shadow-lg">
           {/* City Input */}
           <div className="mb-4">
