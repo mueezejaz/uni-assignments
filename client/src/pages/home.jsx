@@ -1,24 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 const Home = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-
-  const onSubmit = async(data) => {
+  let[loading,setloading] = useState(false)
+  const navigate = useNavigate();
+  let[alreadydone,setalreadydone] = useState(false)
+  const onSubmit = async (data) => {
     try {
+      setloading(true);
+      if (localStorage.getItem("assunipro") !== "true" || !localStorage.getItem("assunipro")) {
         const response = await axios.post('http://localhost:3000/post', data);
         console.log('Form submitted successfully:', response.data);
-      } catch (error) {
-        console.error('There was an error submitting the form:', error);
+        // localStorage.setItem("assunipro", "true");
+        setalreadydone(true);
+      } else {
+        setalreadydone(true); 
       }
+  
+      setloading(false);
+    } catch (error) {
+      console.error('There was an error submitting the form:', error);
+    }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white p-6">
       <div className="w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center mb-6">For Assignment</h2>
         <p className=" font-semibold text-center mb-6">pleas submit carefully because you can only submit it one time </p>
-        <form onSubmit={handleSubmit(onSubmit)} className="bg-gray-800 p-8 rounded-lg shadow-lg">
+        { 
+        alreadydone ||localStorage.getItem("assunipro") === "true" ?<h1 className="text-white text-center mb-6">Thank you for submitting</h1>:
+          <form onSubmit={handleSubmit(onSubmit)} className="bg-gray-800 p-8 rounded-lg shadow-lg">
           {/* City Input */}
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">City Name</label>
@@ -87,12 +102,15 @@ const Home = () => {
           </div>
           {/* Submit Button */}
           <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            Submit
+           { loading? "Loading":"Submit"}
           </button>
-          <button  className="w-full bg-blue-600 hover:bg-blue-700 mt-4 text-white font-semibold py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          
+        </form>}
+        <button onClick={()=>{
+          navigate('/charts')
+        }}  className="w-full bg-blue-600 hover:bg-blue-700 mt-4 text-white font-semibold py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             See Results
           </button>
-        </form>
       </div>
     </div>
   );

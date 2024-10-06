@@ -104,14 +104,16 @@ app.get("/test", (req, res) => {
     await Student.save()
     res.status(200).json({
       sucess: true,
-      data1
+  
     });
   });
   app.get("/getdata",async(req,res) => {
     try {
       let data = await getdata();
+      const totalDocuments = await Studentmodel.estimatedDocumentCount();
       res.status(200).json({
-        data
+        data,
+        totalDocuments
       })
     } catch (error) {
      console.log(error) 
