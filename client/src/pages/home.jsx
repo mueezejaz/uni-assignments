@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 const Home = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  localStorage.setItem("mui-mode","dark")
   let[loading,setloading] = useState(false)
   const navigate = useNavigate();
   let[alreadydone,setalreadydone] = useState(false)
@@ -11,7 +12,7 @@ const Home = () => {
     try {
       setloading(true);
       if (localStorage.getItem("assunipro") !== "true" || !localStorage.getItem("assunipro")) {
-        const response = await axios.post('https://uniassignments.vercel.app/post', data);
+        const response = await axios.post('/post', data);
         localStorage.setItem("assunipro", "true");
         setalreadydone(true);
       } else {

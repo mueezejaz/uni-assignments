@@ -113,6 +113,7 @@ export default function Chart() {
   const theme = createTheme({
     colorSchemes: {
       dark: true,
+      light:false,
     },
   });
   return (
